@@ -4,12 +4,12 @@ var keys = require("./keys.js");
 var axios = require("axios");
 var Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
-var moment= require("moment")
+var moment = require("moment")
 
 
 //make sure user is capture the commands
 var userCommand = process.argv[2];
-var userRequest = process.argv[3];
+var userRequest = process.argv.slice(3).join(" ");
 
 console.log(userCommand);
 execute(userCommand, userRequest)
@@ -43,15 +43,15 @@ function spotifySong(userRequest) {
         // console.log(songs)
         for (var i = 0; i < songs.length; i++) {
             //console.log(songs[i]);
-                    // * Artist(s)
+            // * Artist(s)
             console.log("___________________________________________")
             console.log("")
             console.log("Artists: " + songs[i].artists.map(getArtistNames));
-                    // * The song's name
-           console.log("Song Name: " + songs[i].name);
-
+            // * The song's name
+            console.log("Song Name: " + songs[i].name);
+            // * A preview link of the song from Spotify
             console.log("Preview: " + songs[i].preview_url);
-
+            // * The album that the song is from
             console.log("Album: " + songs[i].album.name);
             console.log("")
             console.log("___________________________________________")
@@ -60,8 +60,8 @@ function spotifySong(userRequest) {
         // Display to the user:
 
 
-        // * A preview link of the song from Spotify
-        // * The album that the song is from
+
+
     });
 }
 function getArtistNames(artist) {
@@ -72,46 +72,46 @@ function getArtistNames(artist) {
 function movieFun(movieName) {
     console.log("movie")
     //check if userCommand is "movie-this"
-var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
-axios
-.get(queryUrl)
-.then(function (response) {
-      // * Title of the movie.
-    console.log("Title: " + response.data.Title);
-      // * Year the movie came out.
-    console.log("Year: " + response.data.Year);
-      // * General Rating.
-    console.log("Rated: " + response.data.Rated);
-      // * Movie Genre
-    console.log("Genre: " + response.data.Genre);
-      // * Actors in the movie.
-    console.log("Actors: " + response.data.Actors);
-      // * Plot of the movie.
-    console.log("Plot: " + response.data.Plot);
-      // * Language of the movie.
-    console.log("Lanuage: " + response.data.Language);
-      // * Country where the movie was produced.
-    console.log("Country: " + response.data.Country);
-      // * Rotten Tomatoes Rating of the movie.
-    console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1]);
-      // * IMDB Rating of the movie.
-    console.log("Imdb Rating: " + response.data.imdbRating);
+    var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+    axios
+        .get(queryUrl)
+        .then(function (response) {
+            // * Title of the movie.
+            console.log("Title: " + response.data.Title);
+            // * Year the movie came out.
+            console.log("Year: " + response.data.Year);
+            // * General Rating.
+            console.log("Rated: " + response.data.Rated);
+            // * Movie Genre
+            console.log("Genre: " + response.data.Genre);
+            // * Actors in the movie.
+            console.log("Actors: " + response.data.Actors);
+            // * Plot of the movie.
+            console.log("Plot: " + response.data.Plot);
+            // * Language of the movie.
+            console.log("Lanuage: " + response.data.Language);
+            // * Country where the movie was produced.
+            console.log("Country: " + response.data.Country);
+            // * Rotten Tomatoes Rating of the movie.
+            console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1]);
+            // * IMDB Rating of the movie.
+            console.log("Imdb Rating: " + response.data.imdbRating);
 
 
-})
-.catch(function (error) {
-        console.log(error)
-});
-      // Display to the user:
+        })
+        .catch(function (error) {
+            console.log(error)
+        });
+    // Display to the user:
 
 }
 
 function saysWhat() {
     console.log("says")
-    fs.readFile("random.txt","utf8", function(error,data){
+    fs.readFile("random.txt", "utf8", function (error, data) {
         var dataArr = data.split(",")
-        if (dataArr.length === 2){
-            execute(dataArr[0],dataArr[1])
+        if (dataArr.length === 2) {
+            execute(dataArr[0], dataArr[1])
         }
     })
     //check if userCommand is "do-what-it-says"
