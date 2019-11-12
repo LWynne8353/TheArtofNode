@@ -34,6 +34,11 @@ function execute(userCommand, userRequest) {
 //}
 //check if userCommand is "spotify-this-song"
 function spotifySong(userRequest) {
+    if (!userRequest){
+        userRequest = "Under Pressure";
+        console.log("song")
+        
+    }
     spotify.search({ type: 'track', query: userRequest }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
@@ -57,25 +62,53 @@ function spotifySong(userRequest) {
             console.log("___________________________________________")
 
         }
-        // Display to the user:
-
-
-
-
     });
 }
 function getArtistNames(artist) {
     return artist.name
 }
-
-
 function movieFun(movieName) {
+    if (!movieName){
+        movieName = "Mr. Nobody";
+        console.log("movie")
+        //check if userCommand is "movie-this"
+        var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+        axios
+            .get(queryUrl)
+            .then(function (response) {
+                // console.log(response.data)
+                // * Title of the movie.
+                console.log("Title: " + response.data.Title);
+                // * Year the movie came out.
+                console.log("Year: " + response.data.Year);
+                // * General Rating.
+                console.log("Rated: " + response.data.Rated);
+                // * Movie Genre
+                console.log("Genre: " + response.data.Genre);
+                // * Actors in the movie.
+                console.log("Actors: " + response.data.Actors);
+                // * Plot of the movie.
+                console.log("Plot: " + response.data.Plot);
+                // * Language of the movie.
+                console.log("Lanuage: " + response.data.Language);
+                // * Country where the movie was produced.
+                console.log("Country: " + response.data.Country);
+                // * Rotten Tomatoes Rating of the movie.
+                console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Source);
+                // * IMDB Rating of the movie.
+                console.log("Imdb Rating: " + response.data.imdbRating);
+            })
+            .catch(function (error) {
+                console.log(error)
+            });
+    } else {
     console.log("movie")
     //check if userCommand is "movie-this"
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
     axios
         .get(queryUrl)
         .then(function (response) {
+            // console.log(response.data)
             // * Title of the movie.
             console.log("Title: " + response.data.Title);
             // * Year the movie came out.
@@ -93,19 +126,16 @@ function movieFun(movieName) {
             // * Country where the movie was produced.
             console.log("Country: " + response.data.Country);
             // * Rotten Tomatoes Rating of the movie.
-            console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1]);
+            console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Source);
             // * IMDB Rating of the movie.
             console.log("Imdb Rating: " + response.data.imdbRating);
-
-
         })
         .catch(function (error) {
             console.log(error)
         });
     // Display to the user:
-
+    }
 }
-
 function saysWhat() {
     console.log("says")
     fs.readFile("random.txt", "utf8", function (error, data) {
@@ -116,12 +146,25 @@ function saysWhat() {
     })
     //check if userCommand is "do-what-it-says"
 }
-
 //check if userCommand is "concert-this" and so on
-
 //run an API call using axios to the BandsInTown 
 //receive user's search term in the queryUrl
 function concert(userRequest) {
+    if (!userRequest){
+        userRequest = "Matt & Kim";
+        console.log("userRequest");
+        var queryUrl = "https://rest.bandsintown.com/artists/" + userRequest + "/events?app_id=codingbootcamp";
+        axios
+            .get(queryUrl)
+            .then(function (response) {
+                //console.log(response.data[0]);
+                console.log("Artist: " + response.data[0].artist.name);
+                console.log(moment(response.data[0].datetime).format("MM/DD/YYYY"));
+                console.log("Venue: " + response.data[0].venue.name);
+                console.log("Country: " + response.data[0].venue.country);
+                console.log("City: " + response.data[0].venue.city)
+            })
+    } else {
     var queryUrl = "https://rest.bandsintown.com/artists/" + userRequest + "/events?app_id=codingbootcamp";
     axios
         .get(queryUrl)
@@ -150,9 +193,6 @@ function concert(userRequest) {
             };
         });
 }
-
-
-
-
+}
 
 //place an error message if userCommand something not listed
