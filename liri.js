@@ -34,11 +34,6 @@ function execute(userCommand, userRequest) {
 //}
 //check if userCommand is "spotify-this-song"
 function spotifySong(userRequest) {
-    if (!userRequest){
-        userRequest = "Under Pressure";
-        console.log("song")
-        
-    }
     spotify.search({ type: 'track', query: userRequest }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
