@@ -63,8 +63,40 @@ function getArtistNames(artist) {
     return artist.name
 }
 function movieFun(movieName) {
-    if (!movieName){
+    if (!movieName) {
         movieName = "Mr. Nobody";
+        console.log("movie")
+        //check if userCommand is "movie-this"
+        var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+        axios
+            .get(queryUrl)
+            .then(function (response) {
+                // console.log(response.data)
+                // * Title of the movie.
+                console.log("Title: " + response.data.Title);
+                // * Year the movie came out.
+                console.log("Year: " + response.data.Year);
+                // * General Rating.
+                console.log("Rated: " + response.data.Rated);
+                // * Movie Genre
+                console.log("Genre: " + response.data.Genre);
+                // * Actors in the movie.
+                console.log("Actors: " + response.data.Actors);
+                // * Plot of the movie.
+                console.log("Plot: " + response.data.Plot);
+                // * Language of the movie.
+                console.log("Lanuage: " + response.data.Language);
+                // * Country where the movie was produced.
+                console.log("Country: " + response.data.Country);
+                // * Rotten Tomatoes Rating of the movie.
+                console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
+                // * IMDB Rating of the movie.
+                console.log("Imdb Rating: " + response.data.imdbRating);
+            })
+            .catch(function (error) {
+                console.log(error)
+            });
+    } else {
         console.log("movie")
         //check if userCommand is "movie-this"
         var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
@@ -96,39 +128,7 @@ function movieFun(movieName) {
             .catch(function (error) {
                 console.log(error)
             });
-    } else {
-    console.log("movie")
-    //check if userCommand is "movie-this"
-    var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
-    axios
-        .get(queryUrl)
-        .then(function (response) {
-            // console.log(response.data)
-            // * Title of the movie.
-            console.log("Title: " + response.data.Title);
-            // * Year the movie came out.
-            console.log("Year: " + response.data.Year);
-            // * General Rating.
-            console.log("Rated: " + response.data.Rated);
-            // * Movie Genre
-            console.log("Genre: " + response.data.Genre);
-            // * Actors in the movie.
-            console.log("Actors: " + response.data.Actors);
-            // * Plot of the movie.
-            console.log("Plot: " + response.data.Plot);
-            // * Language of the movie.
-            console.log("Lanuage: " + response.data.Language);
-            // * Country where the movie was produced.
-            console.log("Country: " + response.data.Country);
-            // * Rotten Tomatoes Rating of the movie.
-            console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Source);
-            // * IMDB Rating of the movie.
-            console.log("Imdb Rating: " + response.data.imdbRating);
-        })
-        .catch(function (error) {
-            console.log(error)
-        });
-    // Display to the user:
+        // Display to the user:
     }
 }
 function saysWhat() {
@@ -145,7 +145,7 @@ function saysWhat() {
 //run an API call using axios to the BandsInTown 
 //receive user's search term in the queryUrl
 function concert(userRequest) {
-    if (!userRequest){
+    if (!userRequest) {
         userRequest = "Matt & Kim";
         console.log("userRequest");
         var queryUrl = "https://rest.bandsintown.com/artists/" + userRequest + "/events?app_id=codingbootcamp";
@@ -160,34 +160,34 @@ function concert(userRequest) {
                 console.log("City: " + response.data[0].venue.city)
             })
     } else {
-    var queryUrl = "https://rest.bandsintown.com/artists/" + userRequest + "/events?app_id=codingbootcamp";
-    axios
-        .get(queryUrl)
-        .then(function (response) {
-            //console.log(response.data[0]);
-            console.log("Artist: " + response.data[0].artist.name);
-            console.log(moment(response.data[0].datetime).format("MM/DD/YYYY"));
-            console.log("Venue: " + response.data[0].venue.name);
-            console.log("Country: " + response.data[0].venue.country);
-            console.log("City: " + response.data[0].venue.city)
-        })
-        //format the date of the event in moment to MM/DD/YYYY
-        //Date of concert - moment(datetime).format("MM/DD/YYYY")
-        //Venue
-        //Venue location
+        var queryUrl = "https://rest.bandsintown.com/artists/" + userRequest + "/events?app_id=codingbootcamp";
+        axios
+            .get(queryUrl)
+            .then(function (response) {
+                //console.log(response.data[0]);
+                console.log("Artist: " + response.data[0].artist.name);
+                console.log(moment(response.data[0].datetime).format("MM/DD/YYYY"));
+                console.log("Venue: " + response.data[0].venue.name);
+                console.log("Country: " + response.data[0].venue.country);
+                console.log("City: " + response.data[0].venue.city)
+            })
+            //format the date of the event in moment to MM/DD/YYYY
+            //Date of concert - moment(datetime).format("MM/DD/YYYY")
+            //Venue
+            //Venue location
 
-        .catch(function (error) {
-            if (error.response) {
-                console.log(error.response.data.artist);
-                console.log(error.response.data.venue.name);
-                console.log(error.response.data.venue.location);
-            } else if (error.request) {
-                console.log(error.request)
-            } else {
-                console.log("Try Again", error.message);
-            };
-        });
-}
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data.artist);
+                    console.log(error.response.data.venue.name);
+                    console.log(error.response.data.venue.location);
+                } else if (error.request) {
+                    console.log(error.request)
+                } else {
+                    console.log("Try Again", error.message);
+                };
+            });
+    }
 }
 
 //place an error message if userCommand something not listed
